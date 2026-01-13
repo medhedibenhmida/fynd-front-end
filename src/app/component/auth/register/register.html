@@ -58,6 +58,16 @@
           </span>
         </div>
 
+        <!-- Age -->
+        <div class="input-wrapper">
+          <i class="fa fa-birthday-cake icon-left"></i>
+          <input type="number" placeholder="Âge" formControlName="age" min="12" max="100">
+          <span class="error"
+                *ngIf="registerForm.get('age')?.invalid && (registerForm.get('age')?.touched || submitted)">
+            Âge invalide
+          </span>
+        </div>
+
         <!-- Mot de passe -->
         <div class="input-wrapper password-wrapper">
           <i class="fa fa-lock icon-left"></i>

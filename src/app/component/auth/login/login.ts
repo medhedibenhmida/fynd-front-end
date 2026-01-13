@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {NgClass, NgIf, NgOptimizedImage} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router, RouterLink} from '@angular/router';
-import {UserService} from '../../user/userService';
+import {Auth} from '../../../service/auth/auth';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,7 @@ export class Login {
   submitted = false;
   message = '';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private authService: Auth,private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
       password: ['', Validators.required],
@@ -31,13 +31,25 @@ export class Login {
 
   showPassword = false;
 
-  onSubmit() {
+  login() {
     this.submitted = true;
 
-    if (this.loginForm.invalid) {
-      return;
-    }
+    if (this.loginForm.valid) {
+      const payload = {
+        email: this.loginForm.value.email,
+        password: this.loginForm.value.password
+      };
 
-    alert(JSON.stringify(this.loginForm.value));
+      this.authService.login(payload).subscribe({
+        next: (res) => {
+          console.log('Login réussi', res);
+          this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+          this.message = err.error?.message || 'Erreur de connexion';
+        }
+      });
+    }
   }
+
 }

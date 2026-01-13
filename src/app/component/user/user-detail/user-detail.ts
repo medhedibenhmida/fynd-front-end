@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {User} from '../../../models/User';
-import {UserService} from '../userService';
+import {UserService} from '../../../service/user/userService';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 
