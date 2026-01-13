@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HTML et body prennent toute la hauteur */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body flex pour layout vertical (navbar + contenu + footer) */
+body {
+  display: flex;       /* <-- c’est ici que ton code manquait */
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.navbar {
+  flex-shrink: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #35566A;
+  color: #F3F7FA;
+}
+
+.navbar-logo a {
+  color: #F3F7FA;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-menu li a {
+  color: #F3F7FA;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navbar-menu li a:hover {
+  color: #5C8A9D;
+}
+
+.main-wrapper {
+  flex: 1; /* prend tout l'espace restant entre navbar et footer */
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  flex-shrink: 0;
+  width: 100%;
+  background-color: #2A4455;
+  color: #CED9E0;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 13px;
+}
+
+.footer a {
+  color: #5C8A9D;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .navbar-menu {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    text-align: center;
+  }
+}

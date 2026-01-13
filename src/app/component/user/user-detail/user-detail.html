@@ -1,0 +1,13 @@
+<h2>Récupérer un utilisateur</h2>
+<input [(ngModel)]="uuid" placeholder="UUID utilisateur">
+<button (click)="getUser()">Chercher</button>
+
+<p *ngIf="message">{{ message }}</p>
+
+<div *ngIf="fetchedUser">
+  <p>Prénom : {{ fetchedUser.firstName }}</p>
+  <p>Nom : {{ fetchedUser.lastName }}</p>
+  <p>Email : {{ fetchedUser.email }}</p>
+  <p>Rôle : {{ fetchedUser.role }}</p>
+  <p>Status : {{ fetchedUser.userStatus }}</p>
+</div>
