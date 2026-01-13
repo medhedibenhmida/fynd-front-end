@@ -1,0 +1,22 @@
+<nav class="navbar">
+  <div class="navbar-logo">
+    <a routerLink="/">
+      <img ngSrc="assets/images/fynd-logo.png" alt="Fynd Logo" class="welcome-logo" height="30" width="45" priority/>
+    </a>
+  </div>
+  <ul class="navbar-menu">
+    <li><a routerLink="/">Accueil</a></li>
+    <li><a routerLink="/about">À propos</a></li>
+    <li><a routerLink="/contact">Contact</a></li>
+    <li><a [routerLink]="['/login']">Se connecter</a></li>
+  </ul>
+</nav>
+
+<div class="main-wrapper">
+  <router-outlet></router-outlet>
+</div>
+
+<footer class="footer">
+  <p>&copy; 2026 Fynd. Tous droits réservés.</p>
+  <p><a routerLink="/terms">CGU</a> | <a routerLink="/privacy">Confidentialité</a></p>
+</footer>

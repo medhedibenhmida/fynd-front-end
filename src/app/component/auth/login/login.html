@@ -1,0 +1,48 @@
+<div class="register-container">
+  <div class="welcome-side">
+    <div class="welcome-box">
+      <img ngSrc="assets/images/fynd-logo.png" alt="Fynd Logo" class="welcome-logo" height="205" width="274" priority/>
+      <h1>Bienvenue sur Fynd</h1>
+      <p>Transforme tes idées en événements mémorables ! Connecte-toi et prends le contrôle de chaque activité, en un
+        clic.</p>
+    </div>
+  </div>
+
+  <div class="form-side">
+    <div class="register-card">
+      <h2 class="title">Se connecter</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Email -->
+        <div class="input-wrapper">
+          <i class="fa fa-envelope icon-left"></i>
+          <input type="email" placeholder="Email" formControlName="email">
+          <span class="error"
+                *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || submitted)">
+            Email invalide
+          </span>
+        </div>
+        <!-- Mot de passe -->
+        <div class="input-wrapper password-wrapper">
+          <i class="fa fa-lock icon-left"></i>
+          <input [type]="showPassword ? 'text' : 'password'" placeholder="Mot de passe" formControlName="password">
+          <span class="toggle-password" (click)="showPassword = !showPassword">
+            <i class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </span>
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid">Se connecter</button>
+        <p class="error" *ngIf="message">{{ message }}</p>
+
+      </form>
+      <div class="register-links">
+        <p>
+          <a routerLink="/forgot-password">Mot de passe oublié ?</a>
+        </p>
+        <p>
+          Déjà un compte ? <a [routerLink]="['/register']">S'inscrire</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>

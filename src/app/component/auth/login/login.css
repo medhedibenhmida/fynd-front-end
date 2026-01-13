@@ -1,0 +1,154 @@
+.register-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  min-height: calc(100vh - 80px - 60px); /* navbar + footer */
+}
+
+.welcome-side, .form-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-side {
+  background: linear-gradient(135deg, #4A7C95 0%, #3A5F7D 100%);
+  color: #F3F7FA;
+  padding: 0 20px;
+}
+
+.welcome-box {
+  text-align: center;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.form-side {
+  padding: 0 20px;
+}
+
+.register-card {
+  background: #F3F7FA;
+  padding: 35px 25px;
+  border-radius: 20px;
+  width: 100%;       /* prendre tout l'espace disponible */
+  max-width: 380px;  /* mais ne pas dépasser 380px */
+  box-sizing: border-box; /* inclut padding dans width */
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;       /* bien occuper tout l'espace */
+  margin-bottom: 15px;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 15px;
+  padding-left: 40px; /* espace pour l'icône */
+  border-radius: 10px;
+  border: 1px solid #CED9E0;
+  font-size: 14px;
+  box-sizing: border-box; /* très important pour pas dépasser */
+}
+
+.password-wrapper input {
+  padding-right: 40px; /* espace pour œil */
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #6CA0B8;
+  box-shadow: 0 0 5px rgba(108,160,184,0.3);
+}
+
+.icon-left {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #4D5D6C;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.password-wrapper input { padding-right: 40px; }
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #4D5D6C;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: #35566A;
+  color: #F3F7FA;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button:hover:not(:disabled) { background-color: #5C8A9D; }
+button:disabled { background-color: #CED9E0; cursor: not-allowed; }
+
+@media (max-width: 900px) {
+  .register-container {
+    flex-direction: column;
+    min-height: auto;
+  }
+  .welcome-side, .form-side {
+    width: 100%;
+  }
+  .register-card, .welcome-box { width: 100%; padding: 25px 20px; }
+}
+.input-wrapper .error {
+  display: block;          /* forcer le retour à la ligne */
+  color: #D9534F;          /* rouge pro pour erreur */
+  font-size: 12px;
+  margin-top: 5px;         /* espace avec l’input */
+  width: 100%;             /* ne dépasse pas le container */
+  box-sizing: border-box;
+}
+
+.input-wrapper .error {
+  display: block;
+  color: #D9534F;
+  font-size: 12px;
+  margin-top: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.register-links {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.register-links a {
+  color: #35566A;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-links a:hover {
+  text-decoration: underline;
+}
+.welcome-logo {
+  width: 150px;      /* largeur du logo */
+  height: auto;      /* hauteur automatique pour garder les proportions */
+  margin-bottom: 20px; /* espace sous le logo */
+}
