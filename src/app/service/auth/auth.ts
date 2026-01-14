@@ -13,4 +13,7 @@ export class Auth {
     return this.http.post(`${this.apiUrl}/login`, credentials);
   }
 
+  forgotPassword (credentials:{email:string}): Observable<any>{
+    return this.http.post(`${this.apiUrl}/forgot-password`, credentials);
+  }
 }

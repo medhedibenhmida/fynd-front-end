@@ -40,14 +40,6 @@ export class Register {
   showPassword = false;
   showConfirmPassword = false;
 
-  togglePassword() {
-    this.showPassword = !this.showPassword;
-  }
-
-  toggleConfirmPassword() {
-    this.showConfirmPassword = !this.showConfirmPassword;
-  }
-
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value;
     const confirm = form.get('confirmPassword')?.value;

@@ -42,7 +42,9 @@ export class Login {
 
       this.authService.login(payload).subscribe({
         next: (res) => {
-          console.log('Login réussi', res);
+          sessionStorage.setItem('token', res.token);
+          console.log(sessionStorage);
+          console.log('Token stocké :', sessionStorage.getItem('token'));
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
