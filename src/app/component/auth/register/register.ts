@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {UserService} from '../../user/userService';
+import {UserService} from '../../../service/user/userService';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgClass, NgIf, NgOptimizedImage} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
@@ -28,6 +28,7 @@ export class Register {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
+      age: ['', [Validators.required, Validators.min(0), Validators.max(120)]],
       password: ['', [
         Validators.required,
         Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
@@ -38,14 +39,6 @@ export class Register {
 
   showPassword = false;
   showConfirmPassword = false;
-
-  togglePassword() {
-    this.showPassword = !this.showPassword;
-  }
-
-  toggleConfirmPassword() {
-    this.showConfirmPassword = !this.showConfirmPassword;
-  }
 
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value;
@@ -68,14 +61,14 @@ export class Register {
         firstName: this.registerForm.value.firstName,
         lastName: this.registerForm.value.lastName,
         email: this.registerForm.value.email,
-        phone: '+216' + this.registerForm.value.phone, // numéro complet
+        phone: '+216' + this.registerForm.value.phone,
+        age:this.registerForm.value.age,
         password: this.registerForm.value.password
       };
 
       this.userService.createUser(payload).subscribe({
         next: res => {
           this.message = 'Utilisateur créé avec succès !';
-          // Redirection vers login
           this.router.navigate(['/login']);
         },
         error: err => this.message = 'Erreur lors de la création de l’utilisateur.'

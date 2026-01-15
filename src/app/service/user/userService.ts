@@ -11,12 +11,11 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  // Créer un utilisateur
+
   createUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/register`, user);
   }
 
-  // Récupérer un utilisateur par UUID
   getUserByUuid(uuid: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/${uuid}`);
   }

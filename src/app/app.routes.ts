@@ -2,13 +2,17 @@ import { Routes } from '@angular/router';
 import {Layout} from './component/layout/layout';
 import {Register} from './component/auth/register/register';
 import {Login} from './component/auth/login/login';
+import {ForgotPassword} from './component/auth/password/forgot-password/forgot-password';
+import {ResetPasswordComponent} from './component/auth/password/reset-password/reset-passwordComponent';
 
 export const routes: Routes = [{
   path: '',
   component: Layout,
   children: [
     { path: 'register', component: Register },
-    { path: 'login', component: Login }
+    { path: 'login', component: Login },
+    { path: 'forgot-password', component: ForgotPassword },
+    { path: 'reset-password', component: ResetPasswordComponent }
   ]
 },
   { path: '**', redirectTo: '' }];
