@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {NgIf} from '@angular/common';
-import {RouterOutlet} from '@angular/router';
+import {RouterOutlet,Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +15,18 @@ export class Home {
   isSidebarClosed = false;
   isProfileMenuOpen = false;
 
+  constructor(private router: Router) {}
+
   toggleSidebar() {
     this.isSidebarClosed = !this.isSidebarClosed;
   }
 
   toggleProfileMenu() {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
+  }
+
+  logout() {
+    sessionStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }

@@ -17,7 +17,7 @@
     <div class="profile-dropdown" [class.show]="isProfileMenuOpen">
       <a routerLink="/profile">Mon profil</a>
       <a routerLink="/settings">Paramètres</a>
-      <a routerLink="/logout">Logout</a>
+      <a routerLink="/logout" (click)="logout()">Logout</a>
     </div>
   </div>
 </nav>
