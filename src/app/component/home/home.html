@@ -1,0 +1,61 @@
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <!-- Hamburger pour sidebar -->
+    <button class="hamburger-btn" (click)="toggleSidebar()">☰</button>
+
+    <div class="navbar-logo">
+      <a routerLink="/">
+        <img src=".../../../../../assets/images/fynd-logo.png" alt="Fynd Logo" class="welcome-logo" height="30" width="45" priority/>
+      </a>
+    </div>
+  </div>
+
+  <!-- Profil dropdown -->
+  <div class="profile-container">
+    <img src=".../../../../../assets/images/fynd-logo.png" alt="Profil" class="profile-img" (click)="toggleProfileMenu()"/>
+    <div class="profile-dropdown" [class.show]="isProfileMenuOpen">
+      <a routerLink="/profile">Mon profil</a>
+      <a routerLink="/settings">Paramètres</a>
+      <a routerLink="/logout">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Sidebar -->
+<aside class="sidebar" [class.closed]="isSidebarClosed">
+  <ul class="sidebar-menu">
+    <li>
+      <i class="fa fa-home"></i>
+      <span *ngIf="!isSidebarClosed">Dashboard</span>
+    </li>
+    <li>
+      <i class="fa fa-user"></i>
+      <span *ngIf="!isSidebarClosed">Profil</span>
+    </li>
+    <li>
+      <i class="fa fa-envelope"></i>
+      <span *ngIf="!isSidebarClosed">Messages</span>
+    </li>
+    <li>
+      <i class="fa fa-cog"></i>
+      <span *ngIf="!isSidebarClosed">Paramètres</span>
+    </li>
+  </ul>
+</aside>
+
+<!-- Contenu principal -->
+<div class="main-wrapper">
+  <div class="welcome-section">
+    <h1>Bienvenue sur Fynd</h1>
+    <p>Vous êtes sur la page d’accueil.</p>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2026 Fynd. Tous droits réservés.</p>
+  <p><a routerLink="/terms">CGU</a> | <a routerLink="/privacy">Confidentialité</a></p>
+</footer>
