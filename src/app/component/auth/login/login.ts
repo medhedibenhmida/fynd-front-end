@@ -43,9 +43,7 @@ export class Login {
       this.authService.login(payload).subscribe({
         next: (res) => {
           sessionStorage.setItem('token', res.token);
-          console.log(sessionStorage);
-          console.log('Token stocké :', sessionStorage.getItem('token'));
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/home']);
         },
         error: (err) => {
           this.message = err.error?.message || 'Erreur de connexion';
