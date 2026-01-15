@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {NgIf, NgOptimizedImage} from '@angular/common';
-import {RouterLink} from '@angular/router';
-import {email} from '@angular/forms/signals';
-import {Auth} from '../../../../service/auth/auth';
+import {Component, ChangeDetectorRef, NgZone} from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgIf, NgOptimizedImage } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { Auth } from '../../../../service/auth/auth';
 
 @Component({
   selector: 'app-forgot-password',
@@ -15,32 +14,37 @@ import {Auth} from '../../../../service/auth/auth';
     RouterLink
   ],
   templateUrl: './forgot-password.html',
-  styleUrl: './forgot-password.css',
+  styleUrls: ['./forgot-password.css'], // ✅ corrigé
 })
 export class ForgotPassword {
 
   forgotPasswordForm: FormGroup;
   submitted = false;
   message = '';
-
-  constructor(private fb: FormBuilder,private authService : Auth) {
+  constructor(private fb: FormBuilder, private authService: Auth, private cd: ChangeDetectorRef,private ngZone: NgZone) {
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)]]
     });
   }
 
   protected generateNewPassword() {
-    console.log("here");
+    this.submitted = true;
+
     if (this.forgotPasswordForm.valid) {
-      const payload = {
-        email: this.forgotPasswordForm.value.email
-      };
+      const payload = { email: this.forgotPasswordForm.value.email };
+
       this.authService.forgotPassword(payload).subscribe({
         next: (res) => {
-          this.message = "Si un compte existe avec cet email, un email vous sera envoyé.";
+          this.ngZone.run(() => {
+            this.message = "Si un compte existe avec cet email, un email vous sera envoyé.";
+            this.cd.detectChanges();
+            this.forgotPasswordForm.reset();
+            this.submitted = false;
+          });
         },
         error: (err) => {
           this.message = err.error?.message || '';
+          this.cd.detectChanges();
         }
       });
     }

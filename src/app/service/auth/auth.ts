@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {ResetPassword} from '../../models/ResetPassword';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,13 @@ export class Auth {
   }
 
   forgotPassword (credentials:{email:string}): Observable<any>{
-    return this.http.post(`${this.apiUrl}/forgot-password`, credentials);
+    console.log('forgotPassword called with', credentials);
+    return this.http.post(`${this.apiUrl}/forgot-password`, credentials,
+      { responseType: 'text' });
+  }
+
+  resetPassword(payload: ResetPassword) {
+    return this.http.post(`${this.apiUrl}/reset-password`, payload, {
+      headers: { 'Content-Type': 'application/json' }});
   }
 }

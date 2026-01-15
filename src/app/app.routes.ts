@@ -3,7 +3,7 @@ import {Layout} from './component/layout/layout';
 import {Register} from './component/auth/register/register';
 import {Login} from './component/auth/login/login';
 import {ForgotPassword} from './component/auth/password/forgot-password/forgot-password';
-import {ResetPassword} from './component/auth/password/reset-password/reset-password';
+import {ResetPasswordComponent} from './component/auth/password/reset-password/reset-passwordComponent';
 
 export const routes: Routes = [{
   path: '',
@@ -12,7 +12,7 @@ export const routes: Routes = [{
     { path: 'register', component: Register },
     { path: 'login', component: Login },
     { path: 'forgot-password', component: ForgotPassword },
-    { path: 'reset-password', component: ResetPassword }
+    { path: 'reset-password', component: ResetPasswordComponent }
   ]
 },
   { path: '**', redirectTo: '' }];

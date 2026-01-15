@@ -69,7 +69,6 @@ export class Register {
       this.userService.createUser(payload).subscribe({
         next: res => {
           this.message = 'Utilisateur créé avec succès !';
-          // Redirection vers login
           this.router.navigate(['/login']);
         },
         error: err => this.message = 'Erreur lors de la création de l’utilisateur.'
