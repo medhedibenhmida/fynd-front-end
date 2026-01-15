@@ -13,11 +13,13 @@
 
   <!-- Profil dropdown -->
   <div class="profile-container">
-    <img src=".../../../../../assets/images/fynd-logo.png" alt="Profil" class="profile-img" (click)="toggleProfileMenu()"/>
-    <div class="profile-dropdown" [class.show]="isProfileMenuOpen">
+    <img src="../../../../assets/images/fynd-logo.png" alt="Profil" class="profile-img"
+         (click)="toggleProfileMenu($event)"/>
+    <div class="profile-dropdown"
+         [class.show]="isProfileMenuOpen">
       <a routerLink="/profile">Mon profil</a>
       <a routerLink="/settings">Paramètres</a>
-      <a routerLink="/logout" (click)="logout()">Logout</a>
+      <a (click)="logout()">Logout</a>
     </div>
   </div>
 </nav>

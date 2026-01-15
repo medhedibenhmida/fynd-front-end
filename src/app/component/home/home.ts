@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {RouterOutlet,Router} from '@angular/router';
 
@@ -21,8 +21,14 @@ export class Home {
     this.isSidebarClosed = !this.isSidebarClosed;
   }
 
-  toggleProfileMenu() {
+  toggleProfileMenu(event: Event) {
+    event.stopPropagation();
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    this.isProfileMenuOpen = false;
   }
 
   logout() {
