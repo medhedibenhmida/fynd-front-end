@@ -15,7 +15,6 @@ export class Auth {
   }
 
   forgotPassword (credentials:{email:string}): Observable<any>{
-    console.log('forgotPassword called with', credentials);
     return this.http.post(`${this.apiUrl}/forgot-password`, credentials,
       { responseType: 'text' });
   }
