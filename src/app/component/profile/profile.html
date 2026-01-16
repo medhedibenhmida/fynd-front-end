@@ -1,0 +1,75 @@
+<div class="profile-wrapper-grid">
+
+  <!-- ===== Colonne gauche ===== -->
+  <div class="profile-left">
+
+    <!-- Carte avatar + nom -->
+    <div class="card-left-top">
+      <!-- Avatar avec overlay pour modifier -->
+      <div class="avatar-container">
+        <img [src]="userAvatar" alt="Avatar" class="avatar-img">
+        <button type="button" class="btn-upload-overlay" (click)="fileInput.click()">✎</button>
+        <input type="file" #fileInput accept="image/*" style="display:none" (change)="onFileSelected($event)">
+      </div>
+
+      <!-- Nom + badge vérifié -->
+      <div class="username-container">
+        <h2 class="username">
+          {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+          <span *ngIf="currentUser?.userStatus === 'VERIFIED'" class="badge-facebook" title="Utilisateur vérifié">
+            <i class="fa fa-check"></i>
+          </span>
+        </h2>
+      </div>
+      <!-- Conteneur extra / badges / stats -->
+      <div class="card-left-bottom">
+        <span>Infos supplémentaires ou badges</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== Colonne droite : Formulaire ===== -->
+  <div class="profile-right">
+
+    <!-- Messages succès / erreur -->
+    <div *ngIf="message" class="message"
+         [ngClass]="{'success': message.includes('succès'), 'error': message.includes('Erreur')}">
+      {{ message }}
+    </div>
+
+    <!-- Formulaire utilisateur -->
+    <form [formGroup]="userForm" (ngSubmit)="updateProfile()" class="form-grid">
+      <div class="form-group">
+        <label for="firstName">Prénom</label>
+        <input id="firstName" formControlName="firstName" placeholder="Prénom">
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Nom</label>
+        <input id="lastName" formControlName="lastName" placeholder="Nom">
+      </div>
+
+      <div class="form-group">
+        <label for="age">Âge</label>
+        <input id="age" type="number" formControlName="age" placeholder="Âge">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Téléphone</label>
+        <input id="phone" formControlName="phone" placeholder="+216 XXXXXXXX">
+      </div>
+
+      <div class="form-group full-width">
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" >
+      </div>
+
+      <button type="submit" class="btn-update" [disabled]="userForm.invalid">
+        Mettre à jour
+      </button>
+    </form>
+
+  </div>
+
+</div>

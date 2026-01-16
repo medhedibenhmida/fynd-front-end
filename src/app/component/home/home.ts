@@ -1,12 +1,15 @@
-import {Component, HostListener} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener} from '@angular/core';
 import {NgIf} from '@angular/common';
-import {RouterOutlet,Router} from '@angular/router';
+import {RouterOutlet, Router, RouterLink} from '@angular/router';
+import {User} from '../../models/User';
+import {UserService} from '../../service/user/userService';
 
 @Component({
   selector: 'app-home',
   imports: [
     NgIf,
-    RouterOutlet
+    RouterOutlet,
+    RouterLink
   ],
   templateUrl: './home.html',
   styleUrl: './home.css',
@@ -14,8 +17,27 @@ import {RouterOutlet,Router} from '@angular/router';
 export class Home {
   isSidebarClosed = false;
   isProfileMenuOpen = false;
+  currentUser?: User;
+  userAvatar: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private userService: UserService,private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.userService.getCurrentUser().subscribe({
+      next: (user) => {
+        this.currentUser = user;
+        if (user.profilePicture) {
+          this.userAvatar = `http://localhost:8080${user.profilePicture}`;
+          this.cdr.detectChanges();
+        } else {
+          this.userAvatar = '/assets/images/default-avatar.png';
+          }
+        },
+      error: (err) => {
+        console.error('Erreur récupération utilisateur:', err);
+      }
+    });
+  }
 
   toggleSidebar() {
     this.isSidebarClosed = !this.isSidebarClosed;
