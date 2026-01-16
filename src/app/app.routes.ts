@@ -6,6 +6,7 @@ import {ForgotPassword} from './component/auth/password/forgot-password/forgot-p
 import {ResetPasswordComponent} from './component/auth/password/reset-password/reset-passwordComponent';
 import {Home} from './component/home/home';
 import { authGuard } from './guards/auth-guard';
+import {Profile} from './component/profile/profile';
 
 export const routes: Routes = [{
   path: '',
@@ -16,5 +17,11 @@ export const routes: Routes = [{
     { path: 'forgot-password', component: ForgotPassword },
     { path: 'reset-password', component: ResetPasswordComponent }
   ]
-},{ path: 'home', component: Home, canActivate: [authGuard] },
+},{path: 'home',
+  component: Home,
+  canActivate: [authGuard],
+  children: [
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    { path: 'profile', component: Profile }
+  ] },
   { path: '**', redirectTo: 'login' }];

@@ -1,12 +1,13 @@
 import {Component, HostListener} from '@angular/core';
 import {NgIf} from '@angular/common';
-import {RouterOutlet,Router} from '@angular/router';
+import {RouterOutlet, Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-home',
   imports: [
     NgIf,
-    RouterOutlet
+    RouterOutlet,
+    RouterLink
   ],
   templateUrl: './home.html',
   styleUrl: './home.css',

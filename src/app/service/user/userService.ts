@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {User} from '../../models/User';
 
@@ -19,4 +19,23 @@ export class UserService {
   getUserByUuid(uuid: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/${uuid}`);
   }
+
+  getCurrentUser(): Observable<User> {
+    const token = sessionStorage.getItem('token'); // récupère ton JWT
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<User>(`${this.apiUrl}/me`, { headers });
+  }
+
+  uploadAvatar(formData: FormData): Observable<string> {
+    const token = sessionStorage.getItem('token');
+    return this.http.post<string>(`${this.apiUrl}/me/avatar`, formData, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+  }
+
 }

@@ -16,4 +16,5 @@ export interface User {
   documentUrl?: string;
   created_at?: string;
   updated_at?: string;
+  profilePicture?: string;
 }
