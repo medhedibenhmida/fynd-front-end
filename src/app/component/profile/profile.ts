@@ -20,7 +20,7 @@ export class Profile implements OnInit {
   userForm: FormGroup;
   user: User | null = null;
   message: string = '';
-  userAvatar: string = 'assets/images/default-avatar.png';
+  userAvatar: string = '';
   currentUser?: User;
   UserStatus = UserStatus;
 
@@ -57,13 +57,24 @@ export class Profile implements OnInit {
   }
 
   updateProfile(): void {
-    if (this.userForm.valid && this.user) {
-      const updatedUser: Partial<User> = {
-        firstName: this.userForm.value.firstName,
-        lastName: this.userForm.value.lastName,
-        age: this.userForm.value.age,
-        phone: this.userForm.value.phone
-      };
+    console.log('clicked')
+
+    if (this.userForm.valid) {
+      const updatedUser: User = this.userForm.value;
+      console.log(updatedUser);
+      // @ts-ignore
+      this.userService.updateUser(this.currentUser.uuid, updatedUser)
+        .subscribe({
+          next: (user) => {
+            this.message = 'Utilisateur mis à jour avec succès !';
+            console.log('Utilisateur mis à jour :', user);
+            this.currentUser = user;
+          },
+          error: (err) => {
+            this.message = 'Erreur lors de la mise à jour : ' + (err.error || err.message);
+            console.error(err);
+          }
+        });
     }
   }
 

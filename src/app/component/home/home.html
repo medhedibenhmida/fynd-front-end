@@ -13,8 +13,11 @@
 
   <!-- Profil dropdown -->
   <div class="profile-container">
-    <img src="../../../../assets/images/fynd-logo.png" alt="Profil" class="profile-img"
+    <img *ngIf="userAvatar" [src]="userAvatar" alt="Profil" class="profile-img"
          (click)="toggleProfileMenu($event)"/>
+    <span *ngIf="currentUser?.userStatus === 'VERIFIED'" class="badge-facebook" title="Utilisateur vérifié">
+            <i class="fa fa-check"></i>
+          </span>
     <div class="profile-dropdown"
          [class.show]="isProfileMenuOpen">
       <a routerLink="/home/profile">Mon profil</a>
@@ -28,8 +31,11 @@
 <aside class="sidebar" [class.closed]="isSidebarClosed">
   <ul class="sidebar-menu">
     <li>
-      <i class="fa fa-home"></i>
-      <span *ngIf="!isSidebarClosed">Dashboard</span>
+      <a routerLink="/home">
+        <i class="fa fa-home"></i>
+        <span *ngIf="!isSidebarClosed">Acceuil</span>
+      </a>
+
     </li>
     <li>
       <i class="fa fa-user"></i>

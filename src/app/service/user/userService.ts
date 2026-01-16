@@ -38,4 +38,12 @@ export class UserService {
     });
   }
 
+  updateUser(uuid: string, user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${uuid}`, user, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`
+      }
+    });
+  }
+
 }
