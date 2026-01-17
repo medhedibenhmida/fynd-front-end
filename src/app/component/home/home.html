@@ -38,8 +38,10 @@
 
     </li>
     <li>
-      <i class="fa fa-user"></i>
-      <span *ngIf="!isSidebarClosed">Profil</span>
+      <a routerLink="/home/activity">
+        <i class="fas fa-list-alt"></i>
+          <span *ngIf="!isSidebarClosed">Mes activités</span>
+      </a>
     </li>
     <li>
       <i class="fa fa-envelope"></i>
