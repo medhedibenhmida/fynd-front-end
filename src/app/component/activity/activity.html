@@ -1,0 +1,105 @@
+<div class="activities-container">
+  <h1 class="title">Mes Activités</h1>
+
+  <!-- Barre de recherche + bouton ajouter -->
+  <div class="top-controls">
+    <input type="text" placeholder="Rechercher une activité..." [(ngModel)]="searchText" />
+    <button (click)="clearFilters()">Annuler</button>
+    <button class="add-btn" (click)="openModal($event)">+ Nouvelle activité</button>
+  </div>
+
+  <!-- Filtres -->
+  <div class="filters">
+    <select [(ngModel)]="filterStatus">
+      <option value="">Tous les statuts</option>
+      <option value="ACTIVE">Active</option>
+      <option value="PENDING">Pending</option>
+      <option value="CANCELLED">Cancelled</option>
+    </select>
+
+    <select [(ngModel)]="filterType">
+      <option value="">Tous les types</option>
+      <option value="Yoga">Yoga</option>
+      <option value="Workshop">Workshop</option>
+      <option value="Running">Running</option>
+      <option value="Lecture">Lecture</option>
+    </select>
+
+    <select [(ngModel)]="filterLocation">
+      <option value="">Toutes les localisations</option>
+      <option value="Parc">Parc</option>
+      <option value="Salle">Salle</option>
+      <option value="Maison">Maison</option>
+    </select>
+  </div>
+
+  <!-- Liste des activités -->
+  <div class="activities-list">
+    <div
+      class="activity-card"
+      *ngFor="let activity of activities" (click)="viewDetails(activity.id)">
+      <div class="activity-header">
+        <h2>{{ activity.title }}</h2>
+        <span class="activity-date">{{ activity.created_at | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <p class="activity-description">{{ activity.description }}</p>
+      <p class="activity-location"><strong>Lieu :</strong> {{ activity.location }}</p>
+      <p class="activity-type"><strong>Type :</strong> {{ activity.type }}</p>
+      <div class="activity-footer">
+        <span class="activity-status" [ngClass]="activity.activityStatus">{{ activity.activityStatus }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal formulaire -->
+  <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>Nouvelle activité</h2>
+      <form [formGroup]="activityForm" (ngSubmit)="submitActivity()">
+        <label>Titre</label>
+        <input formControlName="title" type="text" />
+
+        <label>Description</label>
+        <textarea formControlName="description"></textarea>
+
+        <label for="plannedDate">Date prévue</label>
+        <input id="plannedDate" type="datetime-local" formControlName="plannedDate" [min]="minDateTime">
+
+        <div *ngIf="activityForm.controls['plannedDate'].errors?.['invalidDate']">
+          La date doit être dans le futur. Si aujourd'hui, au moins 1h après.
+        </div>
+
+        <label>Lieu</label>
+        <input formControlName="location" type="text" />
+
+        <label>Type</label>
+        <select formControlName="type">
+          <option value="Yoga">Yoga</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Running">Running</option>
+          <option value="Lecture">Lecture</option>
+        </select>
+
+        <label class="checkbox-label">
+          Privé
+          <input type="checkbox" formControlName="isPrivate" />
+        </label>
+
+        <label>Nombre maximum de participants</label>
+        <input type="number" formControlName="maxParticipants" min="1" max="100" />
+
+        <label>Préférence de genre</label>
+        <select formControlName="genderPreference">
+          <option value="Tous">Tous</option>
+          <option value="Homme">Homme</option>
+          <option value="Femme">Femme</option> <!-- troisième choix ajouté -->
+        </select>
+
+        <div class="modal-buttons">
+          <button type="button" (click)="closeModal()">Annuler</button>
+          <button type="submit" [disabled]="activityForm.invalid">Créer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

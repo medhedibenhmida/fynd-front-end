@@ -1,0 +1,190 @@
+.activities-container {
+  padding: 2rem;
+  background-color: #f9fafb;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333333;
+}
+
+.title {
+  color: #1F6FEB;
+  margin-bottom: 1.5rem;
+}
+
+.filter-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filter-section input {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border: 1px solid #E0E4E8;
+  border-radius: 8px;
+  outline: none;
+}
+
+.filter-section button {
+  background-color: #0A84FF;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 1rem;
+  cursor: pointer;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.filters select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #E0E4E8;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.activities-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.activity-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.activity-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.activity-header h2 {
+  color: #1F6FEB;
+}
+
+.activity-status {
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.activity-status.ACTIVE { background-color: #27AE60; }
+.activity-status.PENDING { background-color: #F39C12; }
+.activity-status.CANCELLED { background-color: #E74C3C; }
+.top-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.top-controls input {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border: 1px solid #E0E4E8;
+  border-radius: 8px;
+  outline: none;
+}
+
+.top-controls button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.top-controls .add-btn {
+  background-color: #0A84FF;
+  color: #fff;
+}
+
+.top-controls .add-btn:hover {
+  background-color: #0F7EEB;
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right:0; bottom:0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+}
+
+.modal h2 {
+  color: #1F6FEB;
+  margin-bottom: 1rem;
+}
+
+.modal label {
+  display: block;
+  margin-top: 0.8rem;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.modal input, .modal textarea, .modal select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #E0E4E8;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.modal-buttons button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal-buttons button[type="submit"] {
+  background-color: #0A84FF;
+  color: #fff;
+}
+
+.modal-buttons button[type="submit"]:hover {
+  background-color: #0F7EEB;
+}
+
+.modal-buttons button[type="button"] {
+  background-color: #E0E4E8;
+}
+.modal input[type="checkbox"] {
+  width: auto;
+  margin-left: 0.5rem;
+}
+
+.modal input[type="number"] {
+  width: 100%;
+}
