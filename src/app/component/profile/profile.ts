@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import { User } from '../../models/User';
 import { UserService } from '../../service/user/userService';
 import {NgClass, NgIf} from '@angular/common';
-import {UserStatus} from '../../enums/UserStatus';
 
 @Component({
   selector: 'app-profile',
@@ -18,11 +17,9 @@ import {UserStatus} from '../../enums/UserStatus';
 export class Profile implements OnInit {
 
   userForm: FormGroup;
-  user: User | null = null;
   message: string = '';
   userAvatar: string = '';
   currentUser?: User;
-  UserStatus = UserStatus;
 
   constructor(private fb: FormBuilder, private userService: UserService) {
     this.userForm = this.fb.group({
@@ -78,11 +75,7 @@ export class Profile implements OnInit {
     }
   }
 
-  // Changer l'avatar
-  changeAvatar(): void {
-    // Ici tu peux ouvrir un file input ou modal pour uploader l'avatar
-    console.log('Changer l’avatar (non implémenté)');
-  }
+
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files?.length) return;
