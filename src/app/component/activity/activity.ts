@@ -125,7 +125,6 @@ export class Activity {
       const newActivity: IActivity = this.activityForm.value;
       this.activityService.createActivity(newActivity).subscribe({
         next: (res) => {
-
           this.message = `Activité créée avec succès, en attente de validation.`;
           this.messageType = 'success';
 
