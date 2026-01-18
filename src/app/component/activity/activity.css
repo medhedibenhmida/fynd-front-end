@@ -1,87 +1,19 @@
+/* --- Container et titres --- */
 .activities-container {
   padding: 2rem;
   background-color: #f9fafb;
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333333;
+  color: #333;
 }
 
 .title {
   color: #1F6FEB;
   margin-bottom: 1.5rem;
+  font-weight: 700;
 }
 
-.filter-section {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.filter-section input {
-  flex: 1;
-  padding: 0.5rem 1rem;
-  border: 1px solid #E0E4E8;
-  border-radius: 8px;
-  outline: none;
-}
-
-.filter-section button {
-  background-color: #0A84FF;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 0 1rem;
-  cursor: pointer;
-}
-
-.filters {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.filters select {
-  padding: 0.5rem 1rem;
-  border: 1px solid #E0E4E8;
-  border-radius: 8px;
-  background: #fff;
-}
-
-.activities-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
-.activity-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
-}
-
-.activity-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-.activity-header h2 {
-  color: #1F6FEB;
-}
-
-.activity-status {
-  padding: 0.3rem 0.8rem;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #fff;
-  text-transform: uppercase;
-}
-
-.activity-status.ACTIVE { background-color: #27AE60; }
-.activity-status.PENDING { background-color: #F39C12; }
-.activity-status.CANCELLED { background-color: #E74C3C; }
+/* --- Top controls (recherche + ajout) --- */
 .top-controls {
   display: flex;
   gap: 1rem;
@@ -104,7 +36,7 @@
   border: none;
   cursor: pointer;
   font-weight: 600;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .top-controls .add-btn {
@@ -114,77 +46,194 @@
 
 .top-controls .add-btn:hover {
   background-color: #0F7EEB;
+  transform: translateY(-1px);
 }
+
+/* --- Filtres --- */
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filters select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #E0E4E8;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* --- Liste des activités --- */
+.activities-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.activity-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.activity-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* --- Modal Glass + Scroll --- */
 .modal-backdrop {
   position: fixed;
   top: 0; left: 0; right:0; bottom:0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
   padding: 2rem;
-  border-radius: 12px;
-  width: 400px;
+  border-radius: 20px;
+  width: 450px;
   max-width: 90%;
+  max-height: 80vh; /* limite la hauteur */
+  overflow-y: auto;  /* active le scroll interne */
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.3);
+  transform: scale(0.9);
+  opacity: 0;
+  animation: popIn 0.35s forwards;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .modal h2 {
   color: #1F6FEB;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 700;
 }
 
 .modal label {
   display: block;
-  margin-top: 0.8rem;
-  margin-bottom: 0.3rem;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
   font-weight: 600;
+  color: #333;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fieldFadeIn 0.3s forwards;
 }
 
-.modal input, .modal textarea, .modal select {
+.modal input,
+.modal textarea,
+.modal select {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #E0E4E8;
-  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(31, 110, 235, 0.3);
+  border-radius: 12px;
   margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px);
+  transition: all 0.25s;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fieldFadeIn 0.3s forwards;
+}
+
+.modal input:focus,
+.modal textarea:focus,
+.modal select:focus {
+  outline: none;
+  border-color: #0A84FF;
+  box-shadow: 0 0 0 3px rgba(10,132,255,0.2);
+}
+
+.modal input[type="checkbox"] {
+  width: auto;
+  accent-color: #0A84FF;
 }
 
 .modal-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fieldFadeIn 0.3s forwards;
+  animation-delay: 0.4s;
 }
 
 .modal-buttons button {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 14px;
   border: none;
   cursor: pointer;
   font-weight: 600;
+  transition: all 0.2s;
 }
 
 .modal-buttons button[type="submit"] {
-  background-color: #0A84FF;
+  background: linear-gradient(135deg, #0A84FF, #0F7EEB);
   color: #fff;
+  box-shadow: 0 6px 20px rgba(10,132,255,0.4);
 }
 
 .modal-buttons button[type="submit"]:hover {
-  background-color: #0F7EEB;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(10,132,255,0.5);
 }
 
 .modal-buttons button[type="button"] {
-  background-color: #E0E4E8;
-}
-.modal input[type="checkbox"] {
-  width: auto;
-  margin-left: 0.5rem;
+  background-color: rgba(240,241,243,0.7);
+  color: #333;
 }
 
-.modal input[type="number"] {
-  width: 100%;
+.error {
+  color: #E74C3C;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
 }
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  margin-top: 0.8rem;
+}
+
+@keyframes fieldFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.message {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.message.success { background-color: #27AE60; }
+.message.error { background-color: #E74C3C; }

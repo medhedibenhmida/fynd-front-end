@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
+import {IActivity} from '../../models/IActivity';
 import {
   AbstractControl,
   FormBuilder,
@@ -9,16 +10,18 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
+import {ActivityApprovalStatus} from '../../enums/ActivityApprovalStatus';
+import {ActivityService} from '../../service/activity/activity-service';
 
 @Component({
   selector: 'app-activity',
   imports: [
     DatePipe,
-    NgClass,
     FormsModule,
     NgForOf,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    NgClass
   ],
   templateUrl: './activity.html',
   styleUrl: './activity.css',
@@ -31,20 +34,24 @@ export class Activity {
   showModal = false;
   activityForm: FormGroup;
   minDateTime: string='';
+  message: string = '';
+  messageType: 'success' | 'error' = 'success';
 
   activities: IActivity[] = [
-    { id:1, title: 'Yoga', description: 'Séance de yoga détente', location: 'Parc', type: 'Yoga', created_at: new Date('2026-01-10'), activityStatus: 'ACTIVE' },
-    { id:2, title: 'Workshop Angular', description: 'Atelier développement Angular', location: 'Salle', type: 'Workshop', created_at: new Date('2026-01-12'), activityStatus: 'PENDING' },
-    { id:3, title: 'Course Running', description: 'Course du dimanche matin', location: 'Parc', type: 'Running', created_at: new Date('2026-01-14'), activityStatus: 'CANCELLED' },
-    { id:4, title: 'Lecture Club', description: 'Discussion autour d’un livre', location: 'Maison', type: 'Lecture', created_at: new Date('2026-01-08'), activityStatus: 'ACTIVE' }
+    { id:1, title: 'Yoga', description: 'Séance de yoga détente', location: 'Parc', type: 'Yoga',  activityApprovalStatus: ActivityApprovalStatus.ACCEPTED },
+    { id:2, title: 'Workshop Angular', description: 'Atelier développement Angular', location: 'Salle', type: 'Workshop',activityApprovalStatus: ActivityApprovalStatus.PENDING },
+    { id:3, title: 'Course Running', description: 'Course du dimanche matin', location: 'Parc', type: 'Running',  activityApprovalStatus: ActivityApprovalStatus.REJECTED },
+    { id:4, title: 'Lecture Club', description: 'Discussion autour d’un livre', location: 'Maison', type: 'Lecture',  activityApprovalStatus: ActivityApprovalStatus.ACCEPTED }
   ];
-  constructor(private fb: FormBuilder) {
+  protected submitted: boolean  = false;
+
+  constructor(private fb: FormBuilder,private activityService:ActivityService,private cd: ChangeDetectorRef) {
     this.activityForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
       location: ['', Validators.required],
       type: ['Yoga', Validators.required],
-      activityStatus: ['ACTIVE', Validators.required],
+      activityApprovalStatus: ['ACTIVE', Validators.required],
       isPrivate: [false],
       plannedDate: ['', [Validators.required, this.futureDateValidator]],
       maxParticipants: [10, [Validators.required, Validators.min(1),Validators.max(100)]],
@@ -60,8 +67,8 @@ export class Activity {
 
   updateMinDateTime() {
     const now = new Date();
-    now.setHours(now.getHours() + 1); // +1h minimum si c’est aujourd’hui
-    this.minDateTime = now.toISOString().slice(0,16); // YYYY-MM-DDTHH:mm
+    now.setHours(now.getHours() + 1);
+    this.minDateTime = now.toISOString().slice(0,16);
   }
 
   clearFilters() {
@@ -77,7 +84,21 @@ export class Activity {
 
   closeModal() {
     this.showModal = false;
-    this.activityForm.reset();
+    this.message = '';
+    this.activityForm.reset({
+      title: '',
+      description: '',
+      location: '',
+      type: 'Yoga',
+      activityApprovalStatus: 'ACTIVE',
+      isPrivate: false,
+      plannedDate: '',
+      maxParticipants: 10,
+      genderPreference: 'Tous'
+    });
+    this.submitted = false;
+    this.updateMinDateTime();
+    this.cd.detectChanges();
   }
 
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
@@ -88,7 +109,6 @@ export class Activity {
     const now = new Date();
     if (selectedDate < now) return { invalidDate: true };
 
-    // Si c’est aujourd’hui, doit être au moins 1h plus tard
     if (
       selectedDate.toDateString() === now.toDateString() &&
       selectedDate.getTime() - now.getTime() < 3600000
@@ -99,7 +119,45 @@ export class Activity {
     return null;
   }
   submitActivity() {
-    console.log("Formulaire soumis !");
+    this.submitted = true;
+
+    if (this.activityForm.valid) {
+      const newActivity: IActivity = this.activityForm.value;
+      this.activityService.createActivity(newActivity).subscribe({
+        next: (res) => {
+
+          this.message = `Activité créée avec succès, en attente de validation.`;
+          this.messageType = 'success';
+
+          this.activityForm.reset({
+            title: '',
+            description: '',
+            location: '',
+            type: 'Yoga',
+            activityApprovalStatus: 'ACTIVE',
+            isPrivate: false,
+            plannedDate: '',
+            maxParticipants: 10,
+            genderPreference: 'Tous'
+          });
+          this.submitted = false;
+
+          this.updateMinDateTime();
+        },
+        error: (err) => {
+          console.log("Erreur backend:", err);
+
+          console.log("Erreur backend:", err.error?.message);
+          this.messageType = 'error';
+          this.message = err.error?.message || "Erreur lors de la création de l’activité.";
+
+          this.cd.detectChanges();
+        }
+      });
+    }
   }
 
+  protected viewDetails(id: number) {
+    console.log(id);
+  }
 }
