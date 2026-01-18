@@ -1,7 +1,7 @@
 <div class="activities-container">
   <h1 class="title">Mes Activités</h1>
 
-  <!-- Barre de recherche + bouton ajouter -->
+  <!-- Top controls -->
   <div class="top-controls">
     <input type="text" placeholder="Rechercher une activité..." [(ngModel)]="searchText" />
     <button (click)="clearFilters()">Annuler</button>
@@ -33,41 +33,47 @@
     </select>
   </div>
 
-  <!-- Liste des activités -->
+  <!-- Liste activités -->
   <div class="activities-list">
-    <div
-      class="activity-card"
-      *ngFor="let activity of activities" (click)="viewDetails(activity.id)">
+    <div class="activity-card" *ngFor="let activity of activities" (click)="viewDetails(activity.id)">
       <div class="activity-header">
         <h2>{{ activity.title }}</h2>
         <span class="activity-date">{{ activity.created_at | date:'dd/MM/yyyy' }}</span>
       </div>
-      <p class="activity-description">{{ activity.description }}</p>
-      <p class="activity-location"><strong>Lieu :</strong> {{ activity.location }}</p>
-      <p class="activity-type"><strong>Type :</strong> {{ activity.type }}</p>
-      <div class="activity-footer">
-        <span class="activity-status" [ngClass]="activity.activityStatus">{{ activity.activityStatus }}</span>
-      </div>
+      <p>{{ activity.description }}</p>
+      <p><strong>Lieu :</strong> {{ activity.location }}</p>
+      <p><strong>Type :</strong> {{ activity.type }}</p>
     </div>
   </div>
 
-  <!-- Modal formulaire -->
+  <!-- Modal -->
   <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
     <div class="modal" (click)="$event.stopPropagation()">
-      <h2>Nouvelle activité</h2>
+      <h2>Faites découvrir votre activité</h2>
+
+      <div *ngIf="message" class="message" [ngClass]="messageType">{{ message }}</div>
+
       <form [formGroup]="activityForm" (ngSubmit)="submitActivity()">
         <label>Titre</label>
-        <input formControlName="title" type="text" />
+        <input formControlName="title" type="text" maxlength="100"/>
+        <p class="char-counter" [class.warning]="activityForm.controls['title'].value?.length >= 100">
+          {{ activityForm.controls['title'].value?.length || 0 }}/100
+        </p>
 
         <label>Description</label>
-        <textarea formControlName="description"></textarea>
+        <textarea formControlName="description" maxlength="600"></textarea>
+        <p class="char-counter" [class.warning]="activityForm.controls['description'].value?.length >= 600">
+          {{ activityForm.controls['description'].value?.length || 0 }}/600
+        </p>
 
-        <label for="plannedDate">Date prévue</label>
-        <input id="plannedDate" type="datetime-local" formControlName="plannedDate" [min]="minDateTime">
+        <label>Notes</label>
+        <textarea formControlName="notes" rows="3" maxlength="400"></textarea>
+        <p class="char-counter" [class.warning]="activityForm.controls['notes'].value?.length >= 400">
+          {{ activityForm.controls['notes'].value?.length || 0 }}/400
+        </p>
 
-        <div *ngIf="activityForm.controls['plannedDate'].errors?.['invalidDate']">
-          La date doit être dans le futur. Si aujourd'hui, au moins 1h après.
-        </div>
+        <label>Date prévue</label>
+        <input type="datetime-local" formControlName="plannedDate" [min]="minDateTime" />
 
         <label>Lieu</label>
         <input formControlName="location" type="text" />
@@ -81,18 +87,18 @@
         </select>
 
         <label class="checkbox-label">
-          Privé
           <input type="checkbox" formControlName="isPrivate" />
+          Privé
         </label>
 
-        <label>Nombre maximum de participants</label>
+        <label>Nombre max participants</label>
         <input type="number" formControlName="maxParticipants" min="1" max="100" />
 
-        <label>Préférence de genre</label>
+        <label>Préférence de participants (genre)</label>
         <select formControlName="genderPreference">
-          <option value="Tous">Tous</option>
-          <option value="Homme">Homme</option>
-          <option value="Femme">Femme</option> <!-- troisième choix ajouté -->
+          <option value="Indifférent" selected>Indifférent</option>
+          <option value="Male">Homme</option>
+          <option value="Female">Femme</option>
         </select>
 
         <div class="modal-buttons">
