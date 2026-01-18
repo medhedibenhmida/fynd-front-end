@@ -234,6 +234,16 @@
   border-radius: 8px;
   color: #fff;
 }
-
 .message.success { background-color: #27AE60; }
 .message.error { background-color: #E74C3C; }
+
+.char-counter {
+  font-size: 0.8rem;
+  color: #999;
+  text-align: right;
+  margin-top: 0.2rem;
+}
+.char-counter.warning {
+  color: #E74C3C;
+  font-weight: bold;
+}

@@ -16,4 +16,5 @@ export interface IActivity {
   isPrivate?:boolean
   maxParticipants?:String;
   genderPreference?:String;
+  notes?:String;
 }

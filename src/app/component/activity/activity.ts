@@ -47,15 +47,15 @@ export class Activity {
 
   constructor(private fb: FormBuilder,private activityService:ActivityService,private cd: ChangeDetectorRef) {
     this.activityForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
+      title: ['', [Validators.required, Validators.maxLength(100)]],
+      description: ['', [Validators.required, Validators.maxLength(600)]],
+      plannedDate: ['', Validators.required],
       location: ['', Validators.required],
-      type: ['Yoga', Validators.required],
-      activityApprovalStatus: ['ACTIVE', Validators.required],
+      type: ['', Validators.required],
       isPrivate: [false],
-      plannedDate: ['', [Validators.required, this.futureDateValidator]],
-      maxParticipants: [10, [Validators.required, Validators.min(1),Validators.max(100)]],
-      genderPreference: ['Tous', Validators.required]
+      maxParticipants: [1, [Validators.required, Validators.min(1), Validators.max(100)]],
+      genderPreference: [''],
+      notes: ['', [Validators.maxLength(400)]]
     });
   }
   ngOnInit() {
@@ -89,12 +89,12 @@ export class Activity {
       title: '',
       description: '',
       location: '',
-      type: 'Yoga',
-      activityApprovalStatus: 'ACTIVE',
+      notes: '',
+      type: '',
       isPrivate: false,
       plannedDate: '',
-      maxParticipants: 10,
-      genderPreference: 'Tous'
+      maxParticipants: '',
+      genderPreference: 'Indifférent'
     });
     this.submitted = false;
     this.updateMinDateTime();
@@ -132,12 +132,12 @@ export class Activity {
             title: '',
             description: '',
             location: '',
-            type: 'Yoga',
-            activityApprovalStatus: 'ACTIVE',
+            type: '',
+            notes: '',
             isPrivate: false,
             plannedDate: '',
-            maxParticipants: 10,
-            genderPreference: 'Tous'
+            maxParticipants: '',
+            genderPreference: 'Indifférent'
           });
           this.submitted = false;
 

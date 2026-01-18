@@ -49,16 +49,28 @@
   <!-- Modal -->
   <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
     <div class="modal" (click)="$event.stopPropagation()">
-      <h2>Nouvelle activité</h2>
+      <h2>Faites découvrir votre activité</h2>
 
       <div *ngIf="message" class="message" [ngClass]="messageType">{{ message }}</div>
 
       <form [formGroup]="activityForm" (ngSubmit)="submitActivity()">
         <label>Titre</label>
-        <input formControlName="title" type="text" />
+        <input formControlName="title" type="text" maxlength="100"/>
+        <p class="char-counter" [class.warning]="activityForm.controls['title'].value?.length >= 100">
+          {{ activityForm.controls['title'].value?.length || 0 }}/100
+        </p>
 
         <label>Description</label>
-        <textarea formControlName="description"></textarea>
+        <textarea formControlName="description" maxlength="600"></textarea>
+        <p class="char-counter" [class.warning]="activityForm.controls['description'].value?.length >= 600">
+          {{ activityForm.controls['description'].value?.length || 0 }}/600
+        </p>
+
+        <label>Notes</label>
+        <textarea formControlName="notes" rows="3" maxlength="400"></textarea>
+        <p class="char-counter" [class.warning]="activityForm.controls['notes'].value?.length >= 400">
+          {{ activityForm.controls['notes'].value?.length || 0 }}/400
+        </p>
 
         <label>Date prévue</label>
         <input type="datetime-local" formControlName="plannedDate" [min]="minDateTime" />
@@ -82,11 +94,11 @@
         <label>Nombre max participants</label>
         <input type="number" formControlName="maxParticipants" min="1" max="100" />
 
-        <label>Préférence de genre</label>
+        <label>Préférence de participants (genre)</label>
         <select formControlName="genderPreference">
-          <option value="Tous">Tous</option>
-          <option value="Homme">Homme</option>
-          <option value="Femme">Femme</option>
+          <option value="Indifférent" selected>Indifférent</option>
+          <option value="Male">Homme</option>
+          <option value="Female">Femme</option>
         </select>
 
         <div class="modal-buttons">
