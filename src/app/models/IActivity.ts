@@ -5,7 +5,6 @@ import {User} from './User';
 export interface IActivity {
   id: number;
   title: string;
-  description: string;
   location?: string | null;
   type: string;
   created_at?: string;
@@ -15,6 +14,5 @@ export interface IActivity {
   creator?:User;
   isPrivate?:boolean
   maxParticipants?:String;
-  genderPreference?:String;
   notes?:String;
 }

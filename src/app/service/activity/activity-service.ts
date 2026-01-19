@@ -22,9 +22,11 @@ export class ActivityService {
   }
 
   createActivity(activity: IActivity): Observable<Activity> {
+    const headers = this.getAuthHeaders();
+    console.log(this.getAuthHeaders());
     return this.http.post<Activity>(this.apiUrl,
       activity,
-      { headers: this.getAuthHeaders() });
+      { headers });
   }
 
 }

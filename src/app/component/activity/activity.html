@@ -40,9 +40,6 @@
         <h2>{{ activity.title }}</h2>
         <span class="activity-date">{{ activity.created_at | date:'dd/MM/yyyy' }}</span>
       </div>
-      <p>{{ activity.description }}</p>
-      <p><strong>Lieu :</strong> {{ activity.location }}</p>
-      <p><strong>Type :</strong> {{ activity.type }}</p>
     </div>
   </div>
 
@@ -58,12 +55,6 @@
         <input formControlName="title" type="text" maxlength="100"/>
         <p class="char-counter" [class.warning]="activityForm.controls['title'].value?.length >= 100">
           {{ activityForm.controls['title'].value?.length || 0 }}/100
-        </p>
-
-        <label>Description</label>
-        <textarea formControlName="description" maxlength="600"></textarea>
-        <p class="char-counter" [class.warning]="activityForm.controls['description'].value?.length >= 600">
-          {{ activityForm.controls['description'].value?.length || 0 }}/600
         </p>
 
         <label>Notes</label>
@@ -92,14 +83,7 @@
         </label>
 
         <label>Nombre max participants</label>
-        <input type="number" formControlName="maxParticipants" min="1" max="100" />
-
-        <label>Préférence de participants (genre)</label>
-        <select formControlName="genderPreference">
-          <option value="Indifférent" selected>Indifférent</option>
-          <option value="Male">Homme</option>
-          <option value="Female">Femme</option>
-        </select>
+        <input type="number" formControlName="maxParticipants" min="2" max="100" />
 
         <div class="modal-buttons">
           <button type="button" (click)="closeModal()">Annuler</button>

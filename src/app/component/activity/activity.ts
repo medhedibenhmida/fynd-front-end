@@ -38,23 +38,21 @@ export class Activity {
   messageType: 'success' | 'error' = 'success';
 
   activities: IActivity[] = [
-    { id:1, title: 'Yoga', description: 'Séance de yoga détente', location: 'Parc', type: 'Yoga',  activityApprovalStatus: ActivityApprovalStatus.ACCEPTED },
-    { id:2, title: 'Workshop Angular', description: 'Atelier développement Angular', location: 'Salle', type: 'Workshop',activityApprovalStatus: ActivityApprovalStatus.PENDING },
-    { id:3, title: 'Course Running', description: 'Course du dimanche matin', location: 'Parc', type: 'Running',  activityApprovalStatus: ActivityApprovalStatus.REJECTED },
-    { id:4, title: 'Lecture Club', description: 'Discussion autour d’un livre', location: 'Maison', type: 'Lecture',  activityApprovalStatus: ActivityApprovalStatus.ACCEPTED }
+    { id:1, title: 'Yoga',  type: 'Yoga',  activityApprovalStatus: ActivityApprovalStatus.ACCEPTED },
+    { id:2, title: 'Workshop Angular', location: 'Salle', type: 'Workshop',activityApprovalStatus: ActivityApprovalStatus.PENDING },
+    { id:3, title: 'Course Running',  location: 'Parc', type: 'Running',  activityApprovalStatus: ActivityApprovalStatus.REJECTED },
+    { id:4, title: 'Lecture Club',  location: 'Maison', type: 'Lecture',  activityApprovalStatus: ActivityApprovalStatus.ACCEPTED }
   ];
   protected submitted: boolean  = false;
 
   constructor(private fb: FormBuilder,private activityService:ActivityService,private cd: ChangeDetectorRef) {
     this.activityForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.maxLength(600)]],
       plannedDate: ['', Validators.required],
       location: ['', Validators.required],
       type: ['', Validators.required],
       isPrivate: [false],
-      maxParticipants: [1, [Validators.required, Validators.min(1), Validators.max(100)]],
-      genderPreference: [''],
+      maxParticipants: [2, [Validators.required, Validators.min(2), Validators.max(100)]],
       notes: ['', [Validators.maxLength(400)]]
     });
   }
@@ -87,14 +85,12 @@ export class Activity {
     this.message = '';
     this.activityForm.reset({
       title: '',
-      description: '',
       location: '',
       notes: '',
       type: '',
       isPrivate: false,
       plannedDate: '',
-      maxParticipants: '',
-      genderPreference: 'Indifférent'
+      maxParticipants: '2'
     });
     this.submitted = false;
     this.updateMinDateTime();
@@ -130,14 +126,12 @@ export class Activity {
 
           this.activityForm.reset({
             title: '',
-            description: '',
             location: '',
             type: '',
             notes: '',
             isPrivate: false,
             plannedDate: '',
-            maxParticipants: '',
-            genderPreference: 'Indifférent'
+            maxParticipants: '2'
           });
           this.submitted = false;
 
